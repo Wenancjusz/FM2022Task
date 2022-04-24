@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.fm2022task.R
 
 class WordRecordingAdapter(
-    var wordRecordingList: List<SongModel>,
+    var wordRecordingList: List<SongModel?>,
     var wordList: List<String>
 ) : RecyclerView.Adapter<WordRecordingAdapter.MyViewHolder>() {
 
@@ -19,11 +19,19 @@ class WordRecordingAdapter(
     }
 
     override fun onBindViewHolder(holder: MyViewHolder, position: Int) {
-        holder.count.text = (holder.adapterPosition+1).toString()
+        val song = wordRecordingList[holder.adapterPosition]
+        holder.count.text = (holder.adapterPosition + 1).toString()
         holder.word.text = wordList[holder.adapterPosition]
-        holder.title.text = wordRecordingList[holder.adapterPosition].title
-        holder.artist.text = wordRecordingList[holder.adapterPosition].artist
-        holder.album.text = wordRecordingList[holder.adapterPosition].album
+        if(song==null){
+            holder.title.text = "No recording found!"
+            holder.artist.text = "No recording found!"
+            holder.album.text = "No recording found!"
+
+        }else {
+            holder.title.text = song.title
+            holder.artist.text = song.artistCredit.firstOrNull()?.name ?: "No recording found!"
+            holder.album.text = song.releases.firstOrNull()?.title ?: "No recording found!"
+        }
     }
 
     override fun getItemCount(): Int {

@@ -1,3 +1,6 @@
 package com.example.fm2022task.wordRecording
 
-class SongResponse (val songs:List<SongModel>)
+data class SongResponse (val created:String,
+                         val count:Int,
+                         val offset:Int,
+                         val recordings:List<SongModel>)

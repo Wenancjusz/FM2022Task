@@ -28,7 +28,7 @@ class PresentDataActivity : AppCompatActivity() {
         val count: Int = intent.getIntExtra("numberOfWords", 0)
         var words: List<String> = emptyList()
 
-        viewModel.getWords(count){ wordsViewmodel ->
+        viewModel.getWords(count,this@PresentDataActivity){ wordsViewmodel ->
             progressBar.visibility = View.GONE
             words = wordsViewmodel
             val wordAdapter = WordAdapter(words, this@PresentDataActivity)
@@ -49,9 +49,9 @@ class PresentDataActivity : AppCompatActivity() {
             words = words.toSortedSet().toList()
             progressBar.visibility = View.VISIBLE
 
-            recViewModel.getSongs(count,words){ songsViewModel ->
+            recViewModel.getSongs(count,words,this@PresentDataActivity){ songs ->
                 progressBar.visibility = View.GONE
-                val wordRecAdapter = WordRecordingAdapter(songsViewModel,words)
+                val wordRecAdapter = WordRecordingAdapter(songs,words)
 
                 val layoutManager: RecyclerView.LayoutManager =
                     LinearLayoutManager(this@PresentDataActivity)
